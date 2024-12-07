@@ -1,76 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-<! --Generated with help of perplexity.ai 6 december 2024 -->
-<head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Geometric Shape Generator</title>
- <style>
- body {
- display: flex;
- flex-direction: column;
- align-items: center;
- justify-content: center;
- height: 100vh;
- margin: 0;
- font-family: Arial, sans-serif;
- }
- #canvas {
- border: 1px solid #ccc;
- }
- #slider-container {
- margin-top: 20px;
- }
- </style>
-</head>
-<body>
+  <! --Generated with help of perplexity.ai 6 december 2024 -->
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Geometric Shape Generator</title>
+      <style>
+        body {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          margin: 0;
+          font-family: Arial, sans-serif;
+        }
 
-<canvas id="canvas" width="400" height="400"></canvas>
+        #canvas {
+          border: 1px solid #ccc;
+        }
 
-<div id="slider-container">
- <label for="sides">Number of Sides: <span id="sides-value" style="font-size: 60px;">3</span></label>
- <input type="range" id="sides" min="3" max="30" value="3">
-</div>
+        #slider-container {
+          margin-top: 20px;
+        }
+      </style>
+    </head>
+    <body>
+      <canvas id="canvas" width="400" height="400"></canvas>
+      <div id="slider-container">
+        <label for="sides">Number of Sides: <span id="sides-value" style="font-size: 60px;">3</span>
+        </label>
+        <input type="range" id="sides" min="3" max="30" value="3">
+      </div>
+      <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const sidesInput = document.getElementById('sides');
+        const sidesValue = document.getElementById('sides-value');
 
-<script>
- const canvas = document.getElementById('canvas');
- const ctx = canvas.getContext('2d');
- const sidesInput = document.getElementById('sides');
- const sidesValue = document.getElementById('sides-value');
+        function drawPolygon(sides) {
+          const radius = 150;
+          const centerX = canvas.width / 2;
+          const centerY = canvas.height / 2;
+          const angleStep = (2 * Math.PI) / sides;
 
- function drawPolygon(sides) {
- const radius = 150;
- const centerX = canvas.width / 2;
- const centerY = canvas.height / 2;
- const angleStep = (2 * Math.PI) / sides;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.beginPath();
 
- ctx.clearRect(0, 0, canvas.width, canvas.height);
- ctx.beginPath();
+          for (let i = 0; i <= sides; i++) {
+            const x = centerX + radius * Math.cos(i * angleStep);
+            const y = centerY + radius * Math.sin(i * angleStep);
 
- for (let i = 0; i <= sides; i++) {
- const x = centerX + radius * Math.cos(i * angleStep);
- const y = centerY + radius * Math.sin(i * angleStep);
- if (i === 0) {
- ctx.moveTo(x, y);
- } else {
- ctx.lineTo(x, y);
- }
- }
+            if (i === 0) {
+              ctx.moveTo(x, y);
+            } else {
+              ctx.lineTo(x, y);
+            }
+          }
 
- ctx.closePath();
- ctx.lineWidth = 3;
- ctx.stroke();
- }
+          ctx.closePath();
+          ctx.lineWidth = 3;
+          ctx.stroke();
+        }
 
- sidesInput.addEventListener('input', function () {
- const sides = parseInt(sidesInput.value);
- sidesValue.textContent = sides;
- drawPolygon(sides);
- });
-
- // Initial drawing
- drawPolygon(parseInt(sidesInput.value));
-</script>
-
-</body>
+        sidesInput.addEventListener('input', function() {
+          const sides = parseInt(sidesInput.value);
+          sidesValue.textContent = sides;
+          drawPolygon(sides);
+        });
+        
+        // Initial drawing
+        drawPolygon(parseInt(sidesInput.value));
+      </script>
+    </body>
 </html>

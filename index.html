@@ -28,7 +28,7 @@
 <canvas id="canvas" width="400" height="400"></canvas>
 
 <div id="slider-container">
- <label for="sides">Number of Sides: <span id="sides-value">3</span></label>
+ <label for="sides">Number of Sides: <span id="sides-value" style="font-size: 60px;">3</span></label>
  <input type="range" id="sides" min="3" max="30" value="3">
 </div>
 
@@ -58,6 +58,7 @@
  }
 
  ctx.closePath();
+ ctx.lineWidth = 3;
  ctx.stroke();
  }
 
@@ -73,4 +74,3 @@
 
 </body>
 </html>
-

@@ -21,15 +21,40 @@
         }
 
         #slider-container {
-          margin-top: 20px;
+          width: 100%;
+          max-width: 300px;
+        }
+        
+        .slider-label {
+          text-align: left;
+          margin-bottom: 5px;
+        }
+        
+        .value-container {
+          text-align: center;
+          margin-bottom: 10px;
+        }
+        
+        #sides-value {
+          font-size: 60px;
+          font-weight: bold;
+        }
+        
+        #sides {
+          width: 100%;
         }
       </style>
     </head>
     <body>
       <canvas id="canvas" width="400" height="400"></canvas>
       <div id="slider-container">
-        <label for="sides">Number of Sides: <span id="sides-value" style="font-size: 60px;"></span>
-        </label>
+        <div class="slider-label">
+          <span class="label-text">Number of Sides:</span>
+        </div>
+        <div class="value-container">
+          <span id="sides-value">3</span>
+        </div>
+        <input type="range" id="sides" min="3" max="30" value="3">
       </div>
       <div>
         <input type="range" id="sides" min="3" max="30" value="3">
@@ -73,7 +98,6 @@
 
         // Initial drawing
         const sides = parseInt(sidesInput.value);
-        sidesValue.textContent = sides.toString().padStart(2,0);
         drawPolygon(parseInt(sidesInput.value));
       </script>
     </body>

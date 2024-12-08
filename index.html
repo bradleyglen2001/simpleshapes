@@ -89,6 +89,7 @@
 
         sidesInput.addEventListener('input', function() {
           const sides = parseInt(sidesInput.value);
+          sidesValue.textContent = sides;
           drawPolygon(sides);
         });
 

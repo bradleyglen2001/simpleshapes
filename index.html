@@ -1,100 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-  <! --Generated with help of perplexity.ai 6 december 2024 -->
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Geometric Shape Generator</title>
-      <style>
+<! --Generated with help of perplexity.ai 6 december 2024, improved 11 Oct 2025 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometric Shape Generator</title>
+    <style>
         body {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-          margin: 0;
-          font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
-
         #canvas {
-          border: 0px solid #ccc;
+            border: 0px solid #ccc;
         }
-
         #slider-container {
-          width: 100%;
-          max-width: 300px;
+            width: 100%;
+            max-width: 300px;
         }
-        
         .slider-label {
-          text-align: center;
-          margin-bottom: 5px;
+            text-align: center;
+            margin-bottom: 5px;
         }
-        
         .value-container {
-          text-align: center;
-          margin-bottom: 10px;
+            text-align: center;
+            margin-bottom: 10px;
         }
-        
-        #sides-value {
-          font-size: 60px;
-          font-weight: bold;
-        }
-        
         #sides {
-          width: 100%;
+            width: 100%;
         }
-      </style>
-    </head>
-    <body>
-      <canvas id="canvas" width="400" height="400"></canvas>
-      <div id="slider-container">
+        #polygon-name {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+            color: #333;
+        }
+        #sides-input {
+            width: 100%;
+            padding: 8px;
+            font-size: 60px;
+            font-weight: bold;
+            text-align: center;
+            border: none;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <div id="slider-container">
         <div class="slider-label">
-          <span class="label-text">Number of Sides:</span>
+            <span class="label-text">Number of Sides:</span>
         </div>
         <div class="value-container">
-          <span id="sides-value">3</span>
+            <input type="number" id="sides-input" min="3" max="30" value="3">
         </div>
         <input type="range" id="sides" min="3" max="30" value="3">
-      </div>
-      <script>
+        <div id="polygon-name">Triangle</div>
+    </div>
+
+    <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         const sidesInput = document.getElementById('sides');
-        const sidesValue = document.getElementById('sides-value');
+        const polygonName = document.getElementById('polygon-name');
+        const sidesNumberInput = document.getElementById('sides-input');
+
+        function getPolygonName(sides) {
+            const names = {
+                3: 'Triangle',
+                4: 'Quadrilateral',
+                5: 'Pentagon',
+                6: 'Hexagon',
+                7: 'Heptagon',
+                8: 'Octagon',
+                9: 'Nonagon',
+                10: 'Decagon',
+                11: 'Hendecagon',
+                12: 'Dodecagon',
+                13: 'Tridecagon',
+                14: 'Tetradecagon',
+                15: 'Pentadecagon',
+                16: 'Hexadecagon',
+                17: 'Heptadecagon',
+                18: 'Octadecagon',
+                19: 'Enneadecagon',
+                20: 'Icosagon'
+            };
+            return names[sides] || sides + '-gon';
+        }
+
+        function updatePolygon(sides) {
+            polygonName.textContent = getPolygonName(sides);
+            sidesInput.value = sides;
+            sidesNumberInput.value = sides;
+            drawPolygon(sides);
+        }
 
         function drawPolygon(sides) {
-          const radius = 150;
-          const centerX = canvas.width / 2;
-          const centerY = canvas.height / 2;
-          const angleStep = (2 * Math.PI) / sides;
+            const radius = 150;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const angleStep = (2 * Math.PI) / sides;
 
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.beginPath();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
 
-          for (let i = 0; i <= sides; i++) {
-            const x = centerX + radius * Math.cos(i * angleStep);
-            const y = centerY + radius * Math.sin(i * angleStep);
+            for (let i = 0; i <= sides; i++) {
+                const x = centerX + radius * Math.cos(i * angleStep);
+                const y = centerY + radius * Math.sin(i * angleStep);
 
-            if (i === 0) {
-              ctx.moveTo(x, y);
-            } else {
-              ctx.lineTo(x, y);
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
             }
-          }
 
-          ctx.closePath();
-          ctx.lineWidth = 3;
-          ctx.stroke();
+            ctx.closePath();
+            ctx.lineWidth = 3;
+            ctx.stroke();
         }
 
         sidesInput.addEventListener('input', function() {
-          const sides = parseInt(sidesInput.value);
-          sidesValue.textContent = sides;
-          drawPolygon(sides);
+            const sides = parseInt(sidesInput.value);
+            updatePolygon(sides);
+        });
+
+        sidesNumberInput.addEventListener('input', function() {
+            let sides = parseInt(sidesNumberInput.value);
+            if (sides >= 3 && sides <= 30) {
+                updatePolygon(sides);
+            }
         });
 
         // Initial drawing
-        drawPolygon(parseInt(sidesInput.value));
-      </script>
-    </body>
+        updatePolygon(parseInt(sidesInput.value));
+    </script>
+</body>
 </html>
